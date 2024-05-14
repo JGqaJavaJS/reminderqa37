@@ -23,7 +23,7 @@ public class AppiumConfig {
         capabilities.setCapability("app", "/Users/julia/Tools/remindly.apk");
 
         try {
-            driver = new AppiumDriver<>(new URL("http://localhost:4723/wd/hub"), capabilities);
+            driver = new AppiumDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }

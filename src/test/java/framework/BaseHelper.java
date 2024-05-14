@@ -24,7 +24,7 @@ public class BaseHelper {
     }
 
     protected void tap(By locator) {
-        driver.findElement(locator);
+        driver.findElement(locator).click();
     }
 
     public void pause(int millis) {
