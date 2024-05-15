@@ -11,7 +11,7 @@ public class MainScreenHelper extends BaseHelper{
     By btnOkPopUp = By.id("android:id/button1");
 
     public void tapBtnOkPopUp() {
-        tap(btnOkPopUp);
+        tap(btnOkPopUp, 10);
     }
 
     public boolean isBtnOkPopUpDisplays() {
