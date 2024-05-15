@@ -14,6 +14,7 @@ public class BaseHelper {
     }
 
     protected boolean isElementPresent(By locator) {
+        waitForElementVisibilityByLocator(locator, 15);
         return driver.findElements(locator).size() > 0;
     }
 
@@ -47,5 +48,10 @@ public class BaseHelper {
     public String getText(By locator, int time) {
         waitForElementVisibilityByLocator(locator, time);
         return driver.findElement(locator).getText().trim();
+    }
+
+    public String getValueByAttribute(By locator, int time, String attributeName) {
+        waitForElementVisibilityByLocator(locator, time);
+        return driver.findElement(locator).getAttribute(attributeName);
     }
 }

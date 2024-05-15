@@ -23,5 +23,25 @@ public class ReminderTests extends BaseTest {
         Assert.assertTrue(app.getReminderHelper().verifyReminderByNameCreated(vacations));
     }
 
+    @Test(description = "add new reminder with the name and date")
+    public void addNewReminderNameAndDateTest() {
+        app.getReminderHelper().tapBtnAddNewReminder();
+        String vacations = "vacations";
+        app.getReminderHelper().fillFieldTitleReminder(vacations);
+
+        app.getReminderHelper().tapOnDateField();
+        app.getReminderHelper().swipeToMonth("future", 1, "June");
+
+       // app.getReminderHelper().pause(30000);
+        app.getReminderHelper().selectDate(0);
+//        app.getReminderHelper().tapOnYear("future", "2025");
+//        app.getReminderHelper().tapOnOk();
+//
+//        app.getReminderHelper().tapApplyNewReminder();
+//
+//        Assert.assertTrue(app.getReminderHelper().verifyReminderDateCorrect("1/6/2025"));
+
+    }
+
 
 }
