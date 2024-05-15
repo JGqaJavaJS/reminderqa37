@@ -34,12 +34,13 @@ public class ReminderTests extends BaseTest {
 
        // app.getReminderHelper().pause(30000);
         app.getReminderHelper().selectDate(0);
-//        app.getReminderHelper().tapOnYear("future", "2025");
-//        app.getReminderHelper().tapOnOk();
-//
-//        app.getReminderHelper().tapApplyNewReminder();
-//
-//        Assert.assertTrue(app.getReminderHelper().verifyReminderDateCorrect("1/6/2025"));
+        app.getReminderHelper().tapOnYear();
+        app.getReminderHelper().swipeToYear("future", "2025");
+        app.getReminderHelper().tapOnOk();
+
+        app.getReminderHelper().tapApplyNewReminder();
+
+        Assert.assertTrue(app.getReminderHelper().verifyReminderDateCorrect("1/6/2025"));
 
     }
 

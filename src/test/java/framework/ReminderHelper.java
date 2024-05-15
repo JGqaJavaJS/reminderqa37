@@ -1,11 +1,14 @@
 package framework;
 
+import com.google.common.base.Objects;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
+import io.appium.java_client.PerformsTouchActions;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.WebElement;
 
 import java.util.Collection;
 import java.util.List;
@@ -25,6 +28,9 @@ public class ReminderHelper extends BaseHelper{
     By monthOnCalendar = By.xpath("//*[@resource-id='com.blanyal.remindly:id/animator']");
 
     By takeDateOnCalendar = By.className("android.view.View");
+    By btnShowYears = By.xpath("//*[@resource-id='com.blanyal.remindly:id/date_picker_year']");
+    By textSelectedYear = By.id("date_picker_year");
+
     public void tapCreateNewReminder() {
         tap(btnAddNewRemind, 10);
     }
@@ -88,6 +94,63 @@ public class ReminderHelper extends BaseHelper{
     public void selectDate(int index) {
         waitForElementVisibilityByLocator(takeDateOnCalendar, 10);
         List<MobileElement> list = driver.findElements(takeDateOnCalendar);
-        list.get(index + 1).click();
+        list.get(index).click();
+    }
+
+    public void tapOnYear() {
+        tap(btnShowYears, 5);
+    }
+
+    public void swipeToYear(String period, String year) {
+        if(!getSelectedYear().contains(year)) {
+            if(period.equals("future")) {
+                swipeUntilNeededYear(year, 0.6, 0.5);
+            } else if (period.equals("past")) {
+                swipeUntilNeededYear(year, 0.5, 0.6);
+            }
+        }
+        tap(By.id("month_text_view"), 10);
+    }
+
+    public void swipeUntilNeededYear(String year, double x, double y) {
+        while(!getYearFromList().equals(year)) {
+            swipeByElement(By.className("android.widget.ListView"), x, y);
+            getYearFromList();
+        }
+    }
+
+    private void swipeByElement(By locator, double startPoint, double stopPoint) {
+        Dimension size = driver.manage().window().getSize();
+
+        //get activity points
+        int y = (int) (size.height * startPoint);
+        int y2 = (int) (size.height * stopPoint);
+
+        //get locator's point
+        WebElement element = driver.findElement(locator);
+        int leftX = element.getLocation().getX();
+        int rightX = leftX + element.getSize().getWidth();
+        int middleX = (leftX + rightX)/2;
+
+        new TouchAction((PerformsTouchActions) driver).longPress(PointOption.point(middleX,y))
+                .moveTo(PointOption.point(middleX,y2))
+                .release().perform();
+    }
+
+    private String getYearFromList() {
+        return getText(By.id("month_text_view"), 10);
+    }
+
+    public String getSelectedYear() {
+        return getText(textSelectedYear, 10);
+    }
+
+    public void tapOnOk() {
+        tap(By.id("ok"), 5);
+    }
+
+    public boolean verifyReminderDateCorrect(String expectedRes) {
+        String actualRes = getText(By.id("recycle_date_time"), 10);
+        return actualRes.contains(expectedRes);
     }
 }
