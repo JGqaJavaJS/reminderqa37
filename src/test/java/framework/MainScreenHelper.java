@@ -17,4 +17,9 @@ public class MainScreenHelper extends BaseHelper{
     public boolean isBtnOkPopUpDisplays() {
         return isElementPresent(btnOkPopUp);
     }
+
+    public String isReminderDatePresent() {
+        waitForElementVisibilityByLocator(By.id("recycle_date_time"), 10);
+        return driver.findElement(By.id("recycle_date_time")).getText();
+    }
 }

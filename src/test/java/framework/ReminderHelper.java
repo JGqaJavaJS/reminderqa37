@@ -153,4 +153,29 @@ public class ReminderHelper extends BaseHelper{
         String actualRes = getText(By.id("recycle_date_time"), 10);
         return actualRes.contains(expectedRes);
     }
+
+    public void tapOnTimeField() {
+        tap(By.id("time"), 5);
+    }
+
+    public void selectTime(String timeOfDay, int xHour, int yHour, int xMin, int yMin) {
+        pause(500);
+        if (timeOfDay.equals("am")) {
+            tapWithCoordinates(285,1324);
+        } else if (timeOfDay.equals("pm")) {
+            tapWithCoordinates(801,1324);
+        }
+        tapWithCoordinates(xHour,yHour);
+        tapWithCoordinates(xMin,yMin);
+    }
+
+    public void tapWithCoordinates(int x, int y) {
+
+        new TouchAction((PerformsTouchActions) driver).tap(PointOption.point(x,y))
+                .release().perform();
+    }
+
+    public void saveReminder() {
+        tap(By.id("save_reminder"), 5);
+    }
 }

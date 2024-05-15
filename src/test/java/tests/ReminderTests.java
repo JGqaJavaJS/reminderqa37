@@ -44,5 +44,22 @@ public class ReminderTests extends BaseTest {
 
     }
 
+    @Test
+    public void addReminderWithTimePositiveTest() {
+        app.getReminderHelper().tapBtnAddNewReminder();
+        String vacations = "vacations";
+        app.getReminderHelper().fillFieldTitleReminder(vacations);
+
+        app.getReminderHelper().tapOnTimeField();
+        app.getReminderHelper().selectTime("am",403,1379,710,1690);
+        app.getReminderHelper().tapOnOk();
+        app.getReminderHelper().saveReminder();
+
+        // 15/5/2024 23:07
+        String reminderDatePresent = app.getMainScreenHelper().isReminderDatePresent();
+        Assert.assertTrue(reminderDatePresent.contains("9:30")
+                || reminderDatePresent.contains("21:30"));
+    }
+
 
 }
